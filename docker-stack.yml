@@ -5,7 +5,12 @@ services:
     image: mysql:5.7
     container_name: mysql
     restart-policy:
-      condition: on-failure
+      condition: on-failure # hata durumunda yeniden başlat
+      delay: 10s # 10 saniye bekle
+      max-attempts: 3 # en fazla 3 kez yeniden başlatmayı dene.
+      window: 120s # 2 yeniden başlatma arası en az 120 saniye olmalı. # hata durumunda yeniden başlat
+      
+
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: test
@@ -29,7 +34,10 @@ services:
       - 8080:80
     container_name: wordpress
     restart-policy:
-      condition: on-failure
+      condition: on-failure # hata durumunda yeniden başlat
+      delay: 10s # 10 saniye bekle
+      max-attempts: 3 # en fazla 3 kez yeniden başlatmayı dene.
+      window: 120s # 2 yeniden başlatma arası en az 120 saniye olmalı.
     depends_on:
       - mysql
     environment:
@@ -66,7 +74,10 @@ services:
     image: phpmyadmin/phpmyadmin
     container_name: phpmyadmin
     restart-policy:
-      condition: on-failure
+      condition: on-failure # hata durumunda yeniden başlat
+      delay: 10s # 10 saniye bekle
+      max-attempts: 3 # en fazla 3 kez yeniden başlatmayı dene.
+      window: 120s # 2 yeniden başlatma arası en az 120 saniye olmalı.
     depends_on:
       - mysql
     ports:
@@ -84,7 +95,10 @@ services:
     image: drupal:latest
     container_name: drupal
     restart-policy:
-      condition: on-failure
+      condition: on-failure # hata durumunda yeniden başlat
+      delay: 10s # 10 saniye bekle
+      max-attempts: 3 # en fazla 3 kez yeniden başlatmayı dene.
+      window: 120s # 2 yeniden başlatma arası en az 120 saniye olmalı.
     ports:
       - 9080:80
     depends_on:
